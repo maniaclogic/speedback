@@ -31,7 +31,7 @@ def rotate_members(half_part1, half_part2, non_mover):
         new_mem_1.insert(new_index_1, member)
     for member in half_part2[1:]:
         new_index_2 = half_part2.index(member) - 1
-        new_mem_2.insert(new_index_1, member)
+        new_mem_2.insert(new_index_2, member)
         
     new_mem_2.append(half_part1[-1])
     
@@ -40,14 +40,16 @@ def rotate_members(half_part1, half_part2, non_mover):
 def pairing_matrix(member):
     non_mover = member[0]
     matrix = []
-    int_half_members = int(len(member)/2)
     
     if (len(member) % 2) != 0:
         member.append("self-reflection")
-    
+
+    int_half_members = int(len(member)/2)
     
     half_members1 = [i for i in member[:int_half_members]]
+    print(half_members1)
     half_members2 = [i for i in member[int_half_members:]]
+    print(half_members2)
 
     matrix_append(matrix, half_members1, half_members2)
     
@@ -75,11 +77,14 @@ def assign_time(start_time, pairing_matrix):
 
 def find_correct_link(pair, dict_participants_links):
     #if dict_participants_links.get(pair[0]).contains("client") or dict_participants_links.get(pair[1]).contains("client"):
-    person_a = dict_participants_links.get(pair[0])
-    person_b = dict_participants_links.get(pair[1])
+    person_a = dict_participants_links.get(pair[0], "self-reflection")
+    person_b = dict_participants_links.get(pair[1], "self-reflection")
     person_a_is_client = "client" in person_a
     person_b_is_client = "client" in person_b
-    if person_a_is_client:
+
+    if person_a == "self-reflection" or person_b == "self-reflection":
+        return "self-reflection"
+    elif person_a_is_client:
         return person_a.rsplit("client; ")[1]
     elif person_b_is_client:
         return person_b.rsplit("client; ")[1]
@@ -93,6 +98,7 @@ def find_correct_link(pair, dict_participants_links):
 def assign_room(pairing_matrix, dict_participants_links):
     for iteration in pairing_matrix:
         for pair in iteration[1:]:
+            print(pair)
             link_to_append = find_correct_link(pair, dict_participants_links)
             pair.append(link_to_append)
     

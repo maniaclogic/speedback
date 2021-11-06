@@ -76,18 +76,17 @@ def assign_time(start_time, pairing_matrix):
     return pairing_matrix
 
 def find_correct_link(pair, dict_participants_links):
-    #if dict_participants_links.get(pair[0]).contains("client") or dict_participants_links.get(pair[1]).contains("client"):
     person_a = dict_participants_links.get(pair[0], "self-reflection")
     person_b = dict_participants_links.get(pair[1], "self-reflection")
-    person_a_is_client = "client" in person_a
-    person_b_is_client = "client" in person_b
+    person_a_is_priority = "priority" in person_a
+    person_b_is_priority = "priority" in person_b
 
     if person_a == "self-reflection" or person_b == "self-reflection":
         return "self-reflection"
-    elif person_a_is_client:
-        return person_a.rsplit("client; ")[1]
-    elif person_b_is_client:
-        return person_b.rsplit("client; ")[1]
+    elif person_a_is_priority:
+        return person_a.rsplit("priority; ")[1]
+    elif person_b_is_priority:
+        return person_b.rsplit("priority; ")[1]
     elif "zoom" in person_a:
         return person_a
     elif person_b == "no_room":

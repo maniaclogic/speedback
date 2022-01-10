@@ -52,9 +52,6 @@ def pairing_matrix(member):
     print(half_members2)
 
     matrix_append(matrix, half_members1, half_members2)
-
-    # -1 because one person needs to have a session with every other person
-    # -2 for fixing one off issue (last session would be the first)
     condition = len(member) - 2
 
     while condition != 0:
@@ -66,7 +63,6 @@ def pairing_matrix(member):
 
 def assign_time(start_time, pairing_matrix):
     current_time = datetime.strptime(start_time, "%H%M")
-    #add_time_list = [iteration.insert(0, new_time) for iteration in len(pairing_matrix)]
 
     for iteration in pairing_matrix:
         new_time = current_time + timedelta(minutes=4)
@@ -77,7 +73,6 @@ def assign_time(start_time, pairing_matrix):
     return pairing_matrix
 
 def self_reflection_correction(pair, dict_participants_links):
-    #if dict_participants_links.get(pair[0]).contains("client") or dict_participants_links.get(pair[1]).contains("client"):
     person_a = dict_participants_links.get(pair[0], "self-reflection")
     person_b = dict_participants_links.get(pair[1], "self-reflection")
 
@@ -86,7 +81,6 @@ def self_reflection_correction(pair, dict_participants_links):
         pair[1] = "self-reflection"
 
 def find_correct_link(pair, dict_participants_links):
-    #if dict_participants_links.get(pair[0]).contains("client") or dict_participants_links.get(pair[1]).contains("client"):
     person_a = dict_participants_links.get(pair[0], "self-reflection")
     person_b = dict_participants_links.get(pair[1], "self-reflection")
     person_a_is_client = "client" in person_a
@@ -136,9 +130,6 @@ participants = list(participants_mapped_to_links.keys())
 pairings = build_pairings(participants)
 
 matrix = pairing_matrix(participants)
-
-# debugging:
-# print(matrix)
 
 matrix = assign_time(input("Start Time: "), matrix)
 
